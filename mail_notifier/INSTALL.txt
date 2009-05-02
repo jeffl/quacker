@@ -1,0 +1,11 @@
+INSTALL:
+
+1. run ./install.sh
+2. run the config creator script to create you mailbox info (./bin/config_creator)
+3. copy the generated file to ~/.mailnotifier/config.yml
+4. (optional) update the plist file (~/Library/LaunchAgents/com.jefflanza.mailnotifier.plit) to adjust the check interval (defaults to every 600 seconds)
+
+
+UNINSTALL:
+
+1. run ./uninstall.sh

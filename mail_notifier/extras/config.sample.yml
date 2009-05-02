@@ -1,0 +1,11 @@
+--- 
+- :pass: xxxxx
+  :name: Tackle Box
+  :link: http://mail.google.com/mail/#label/TB
+  :user: jlinza@tackle.com
+  :server: my.pop.server 
+- :pass: xxxxxx
+  :name: Sam Whole
+  :link: http://mail.google.com/mail/#label/HS
+  :user: skoofman@snacle.com
+  :server: my.popper.server
