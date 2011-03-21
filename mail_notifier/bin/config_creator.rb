@@ -15,9 +15,12 @@ end
 
 output_file = ARGV[0]
 
-def test_connection(pserver,puser,ppass)
+def test_connection(pserver,puser,ppass,ssl=false)
 	puts "\nTesting connection...(may take up to 30 seconds)"
-	pop = Net::POP3.new(pserver,110)
+	pop = Net::POP3.new(pserver)
+	if (ssl) 
+		pop.enable_ssl()
+	end
 	pop.read_timeout = 10
 	
 	begin
@@ -52,15 +55,21 @@ def get_mailbox_data
 	server = get_named_param("Mailbox Server")
 	uname = get_named_param("Mailbox Username")
 	pass = get_named_param("Mailbox Password")
+	ssl = false
 	if (!test_connection(server,uname,pass))
-		return nil
+		if (test_connection(server,uname,pass,true))
+			ssl = true
+		else
+			return nil
+		end
 	end
 	return {
 		:name => name,
 		:link => link,
 		:server => server,
 		:user => uname,
-		:pass => pass
+		:pass => pass,
+		:ssl => ssl
 	}
 end
 

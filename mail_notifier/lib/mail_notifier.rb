@@ -217,7 +217,7 @@ class MailNotifier
 
 		debug("Checking Mailbox #{mbox[:name]}")
 
-		have_mails = get_mailbox(mbox[:name],mbox[:server],mbox[:user],mbox[:pass])
+		have_mails = get_mailbox(mbox[:name],mbox[:server],mbox[:user],mbox[:pass],mbox[:ssl])
 		
 		mail_count = have_mails['new_count']
 		i = mail_count - 1
@@ -309,13 +309,20 @@ class MailNotifier
 		debug("Set new mail count for #{mailbox_name} to #{num_messages}")
 	end
 
-	def get_mailbox(mailbox_name,pserver,puser,ppass)
+	def get_mailbox(mailbox_name,pserver,puser,ppass,is_ssl)
 		last_mail_count = get_last_mail_count(mailbox_name)
 		debug("last_mail_count #{last_mail_count}")
 		return_count = 0
 		new_messages = []
 		new_mail_count = -1
-		pop = Net::POP3.start(pserver,110,puser,ppass)
+
+	
+		pop = Net::POP3.new(pserver)
+		if (is_ssl) 
+			pop.enable_ssl()
+		end
+
+		pop.start(puser,ppass)
 		if pop.mails.empty?
 			return_count = 0
 		else
